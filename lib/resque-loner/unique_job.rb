@@ -2,7 +2,7 @@ require 'digest/md5'
 
 #
 #  If you want your job to be unique, include this module in it. If you wish,
-#  you can overwrite this implementation of redis_key to fit your needs
+#  you can overwrite this implementation of redis_key_for_loner to fit your needs
 #
 module Resque
   module Plugins
@@ -22,7 +22,7 @@ module Resque
         #  Payload is what Resque stored for this job along with the job's class name.
         #  On a Resque with no plugins installed, this is a hash containing :class and :args
         #
-        def redis_key(payload)
+        def redis_key_for_loner(payload)
           payload = decode(encode(payload)) # This is the cycle the data goes when being enqueued/dequeued
           job  = payload[:class] || payload["class"]
           args = (payload[:args]  || payload["args"])
